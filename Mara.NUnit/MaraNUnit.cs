@@ -57,15 +57,16 @@ namespace Mara {
         public bool           HasXPath(string xpath)                            { return Page.HasXPath(xpath);                       }
         public bool           HasContent(string text)                           { return Page.HasContent(text);                      }
 
-        public void Refresh()                            { Page.Refresh();                     }
-        public void Close()                              { Page.Close();                       }
-        public void ResetSession()                       { Page.ResetSession();                }
-        public void Visit(string path)                   { Page.Visit(path);                   }
-        public void Click(string linkOrButton)           { Page.Click(linkOrButton);           }
-        public void ClickLink(string linkText)           { Page.ClickLink(linkText);           }
-        public void ClickButton(string buttonValue)      { Page.ClickButton(buttonValue);      }
-        public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
-        public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
-        public void ExecuteScript(string script)         { Page.ExecuteScript(script);         }
+        public void Refresh()                                                 { Page.Refresh();                     }
+        public void Close()                                                   { Page.Close();                       }
+        public void ResetSession()                                            { Page.ResetSession();                }
+        public void Visit(string path)                                        { Page.Visit(path);                   }
+        public void Click(string linkOrButton)                                { Page.Click(linkOrButton);           }
+        public void ClickLink(string linkText)                                { Page.ClickLink(linkText);           }
+        public void ClickButton(string buttonValue)                           { Page.ClickButton(buttonValue);      }
+        public void FillIn(string field, string value)                        { Page.FillIn(field, value);          }
+        public void FillInFields(object fieldsAndValues)                      { Page.FillInFields(fieldsAndValues); }
+        public void FillInFields(IDictionary<string, object> fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
+        public void ExecuteScript(string script)                              { Page.ExecuteScript(script);         }
     }
 }

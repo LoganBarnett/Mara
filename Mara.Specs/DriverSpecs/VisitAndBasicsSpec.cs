@@ -34,19 +34,19 @@ namespace Mara.DriverSpecs {
         [Test]
         public void CanGetCurrentUrl() {
             Visit("/");
-            Assert.True(CurrentUrl == Mara.Server.AppHost + "/");
+            Assert.That(CurrentUrl, Is.EqualTo(Mara.AppHost + "/"));
 
             Visit("/About.aspx");
-            Assert.True(CurrentUrl == Mara.Server.AppHost + "/About.aspx"); // FIXME Don't use a Global Mara.Server
+            Assert.That(CurrentUrl, Is.EqualTo(Mara.AppHost + "/About.aspx")); // FIXME Don't use a Global Mara.
         }
 
         [Test]
         public void CanGetCurrentPath() {
             Visit("/");
-            Assert.True(CurrentPath == "/");
+            Assert.That(CurrentPath, Is.EqualTo("/"));
 
             Visit("/About.aspx");
-            Assert.True(CurrentPath == "/About.aspx");
+            Assert.That(CurrentPath, Is.EqualTo("/About.aspx"));
         }
 
         // This should go in a group of specs that are ONLY for Drivers that support JavaScript

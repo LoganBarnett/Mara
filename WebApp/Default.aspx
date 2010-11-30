@@ -7,5 +7,5 @@
 <h2>Why is this styled?</h2>
 <p>I had to make this web app and add content to it for our test to use</p>
 <p>I got sick or starting at an ugly, unstyled site</p>
-<p>So now I get to look at an ugle, <em>styled</em> site!</p>
+<p>So now I get to look at an ugly, <em>styled</em> site!</p>
 </asp:Content>

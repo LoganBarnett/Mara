@@ -57,7 +57,10 @@ namespace Mara.Drivers {
 
             public string Value {
                 get { return this["value"]; }
-                set { NativeElement.SendKeys(value); }
+                set {
+                    NativeElement.Clear();
+                    NativeElement.SendKeys(value);
+                }
             }
 
             public string Text {

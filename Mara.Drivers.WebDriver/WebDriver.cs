@@ -194,7 +194,8 @@ namespace Mara.Drivers {
 
             // Note: we might want to make it easy to get access to an HtmlUnit driver that does *NOT* execute 
             //       JavaScrpt *AND* one that *DOES* execute JavaScript for performance ... way faster tests?
-            capabilities.IsJavaScriptEnabled = true; // Run with JavaScript support, please!  (Needed for HtmlUnit)
+            if (Environment.GetEnvironmentVariable("NO_JAVASCRIPT") == null)
+                capabilities.IsJavaScriptEnabled = true; // Run with JavaScript support, please!  (Needed for HtmlUnit)
 
 		    return new RemoteWebDriver(remoteUri, capabilities);
         }
@@ -236,6 +237,7 @@ namespace Mara.Drivers {
             webdriver.Navigate().Refresh();
         }
 
+        // TODO I don't like using Mara.AppHost ... ?  using something static feels icky?  maybe?
         public void Visit(string path) {
             Mara.Log("Visit({0})", path);
             // The ChromeDriver hates life ...
@@ -266,7 +268,12 @@ namespace Mara.Drivers {
         }
 
         public void FillInFields(object fieldsAndValues) {
-            foreach (var field in fieldsAndValues.ToDictionary())
+            FillInFields(fieldsAndValues.ToDictionary());
+        }
+
+        // TODO TEST!
+        public void FillInFields(IDictionary<string, object> fieldsAndValues) {
+            foreach (var field in fieldsAndValues)
                 FillIn(field.Key, field.Value.ToString());
         }
 
@@ -279,7 +286,7 @@ namespace Mara.Drivers {
         }
 
         public string CurrentPath {
-            get { return webdriver.Url.Replace(Mara.Server.AppHost, ""); } // FIXME Don't use a Global Mara.Server
+            get { return webdriver.Url.Replace(Mara.AppHost, ""); } // FIXME Don't use a Global Mara.Server
         }
 
         public bool JavaScriptSupported { get { return true; }}
@@ -311,6 +318,7 @@ namespace Mara.Drivers {
             return Element.List(webdriver.FindElements(By.XPath(xpath)), this);
         }
 
+        // TODO Move this into some common code?  a Driver baseclass with some common functionality?  or ... SOMETHING?
         public string SaveAndOpenPage() {
             var fileName = Path.Combine(Path.GetTempPath(), "Mara_" + DateTime.Now.ToString("yyyy-MM-dd_HHmmssffff") + ".html");
 

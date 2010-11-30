@@ -15,6 +15,12 @@ namespace Mara.DriverSpecs {
     [TestFixture]
     public class JavaScriptSpec : MaraTest {
 
+        [SetUp]
+        public void JavaScriptSetup() {
+            if (! Page.JavaScriptSupported)
+                Assert.Ignore("This driver does not support JavaScript");
+        }
+
         [Test]
         public void CanExecuteScript() {
             Visit("/Form.aspx");

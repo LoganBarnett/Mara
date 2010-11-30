@@ -6,7 +6,7 @@ Mara
 Description
 -----------
 
-Mara aims to simplify the process of integration testing .NET web applications, such as ASP.NET, ASP.NET MVC, or WCF. Mara simulates how a real user would interact with a web application.  It is agnostic about the driver running your tests and currently comes bundled with Selenium support built in.  It is also agnostic about servers that can automatically server your application and currently comes bundles with Cassini and XSP support built in.
+Mara aims to simplify the process of integration testing .NET web applications, such as ASP.NET, ASP.NET MVC, or WCF. Mara simulates how a real user would interact with a web application.  It is agnostic about the driver running your tests and currently comes bundled with Selenium and System.Net.WebClient support built in.  It is also agnostic about servers that can automatically server your application and currently comes bundles with Cassini and XSP support built in.
 
 Mara is inspired by [Capybara][], a similar tool written in Ruby.
 
@@ -22,10 +22,17 @@ We will make Mara available as a [NuGet][] package.  For now, you can clone the 
 
 Mara currently works in [Mono][] (2.8 required for HtmlUnit with WebDriver) and MS .NET 3.5.  Keeping Mara working in [Mono][] is and will always be a *high* priority!
 
+WebClient
+---------
+
+The default driver uses System.Net.WebClient to send requests and [HtmlAgilityPack][] to run XPath queries against the resulting HTML.  It does *NOT* support JavaScript.  Because it doesn't execute JavaScript or automate a browser, it is quite fast.
+
+Very shortly, Mara will make it easy to switch between drivers in your tests so you can use WebClient for some of your tests that don't require JavaScript but use WebDriver (or WatiN) for tests that do require JavaScript.
+
 Selenium 2.0 (WebDriver)
 ------------------------
 
-[Selenium WebDriver][webdriver] is currently the only built in driver.  We plan on adding [WatiN][] support in the near future.
+[Selenium WebDriver][webdriver] is currently the only built in driver that supports JavaScript.  We plan on adding [WatiN][] support in the near future.
 
 I'll add more documentation on how to configure webdriver later ... for now, the most important thing to know is that there are 
 some very useful environment variables that can be used, mainly `BROWSER`
@@ -268,10 +275,11 @@ License
 
 Mara is released under the MIT license.
 
-[capybara]:  https://github.com/jnicklas/capybara
-[nuget]:     http://nuget.codeplex.com/
-[thumbnail]: http://upload.wikimedia.org/wikipedia/en/thumb/9/91/Cavy1.jpg/90px-Cavy1.jpg
-[wikipedia]: http://en.wikipedia.org/wiki/Mara_(mammal)
-[webdriver]: http://code.google.com/p/selenium/
-[watin]:     http://watin.sourceforge.net/
-[mono]:      http://www.mono-project.com/
+[capybara]:        https://github.com/jnicklas/capybara
+[nuget]:           http://nuget.codeplex.com/
+[thumbnail]:       http://upload.wikimedia.org/wikipedia/en/thumb/9/91/Cavy1.jpg/90px-Cavy1.jpg
+[wikipedia]:       http://en.wikipedia.org/wiki/Mara_(mammal)
+[webdriver]:       http://code.google.com/p/selenium/
+[watin]:           http://watin.sourceforge.net/
+[mono]:            http://www.mono-project.com/
+[HtmlAgilityPack]: http://htmlagilitypack.codeplex.com/

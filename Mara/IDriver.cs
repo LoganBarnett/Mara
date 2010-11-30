@@ -24,6 +24,7 @@ namespace Mara.Drivers {
         void ClickButton(string buttonValue);
         void FillIn(string field, string value);
         void FillInFields(object fieldsAndValues);
+        void FillInFields(IDictionary<string, object> fieldsAndValues);
 
         IElement Find(string xpath);
         IElement Find(string xpath, bool throwExceptionIfNotFound);

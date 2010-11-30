@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 using Mara;
 
@@ -36,7 +37,7 @@ namespace Mara.DriverSpecs {
         [Test]
         public void CanFindElementsUsingXPath_ReturnsEmptyIfNotFound() {
             Assert.That(All("//p").Count, Is.EqualTo(5));
-            Assert.That(All("//p")[0].Text, Is.EqualTo("If you see this text, you're running our test suite!"));
+            Assert.That(All("//p").Select(e => e.Text).ToList<string>(), Has.Member("If you see this text, you're running our test suite!"));
 
             Assert.IsEmpty(All("//strong"));
             Assert.That(All("//strong").Count, Is.EqualTo(0));

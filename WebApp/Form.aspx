@@ -12,18 +12,19 @@
 </dl>
 <div style="clear: left;" />
 <% } %>
-
 <h1>Form</h1>
-<fieldset>
-  <legend>Fill out some stuff to POST</legend>
-  <form method="post">
-    <label for="DogName">Dog name</label>
-    <input type="text" id="DogName" name="DogName" placeholder="Enter dog name here" value="<%= Request["DogName"] %>" autofocus="true" />
+<form action="/Form.aspx" method="post">
+  <fieldset>
+    <legend>Fill out some stuff to POST</legend>
+      <label for="DogName">Dog name</label>
+      <input type="text" id="DogName" name="DogName" placeholder="Enter dog name here" value="<%= Request["DogName"] %>" autofocus="true" />
 
-    <label for="DogBreed">Breed of dog</label>
-    <input type="text" name="DogBreed" placeholder="eg. Golden Retriever" value="<%= Request["DogBreed"] %>" />
+      <label for="DogBreed">Breed of dog</label>
+      <input type="text" name="DogBreed" placeholder="eg. Golden Retriever" value="<%= Request["DogBreed"] %>" />
 
-    <input type="submit" value="POST some stuff" />
-  </form>
-</fieldset>
+      <input type="submit" value="POST some stuff" />
+  </fieldset>
+</form>
+
+<input type="text" name="OutsideOfForm" value="I am outside of the form!" />
 </asp:Content>

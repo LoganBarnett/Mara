@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Mara;
 using Mara.Servers;
@@ -26,8 +27,8 @@ namespace Mara.Specs {
     [TestFixture]
     public class MaraSpec {
 
-        [SetUp]    public void Setup()    { ResetDefaults(); }
-        [TearDown] public void Teardown() { ResetDefaults(); }
+        [SetUp]    public void Setup()    { ResetDefaults(); KillEnvironmentVariables();    }
+        [TearDown] public void Teardown() { ResetDefaults(); RestoreEnvironmentVariables(); }
 
         void ResetDefaults() {
             Mara.Port      = 8090;
@@ -38,6 +39,25 @@ namespace Mara.Specs {
             Mara.RunServer = true;
 
             Mara.DefaultDriverName = "Mara.Drivers.WebDriver";
+        }
+
+        Dictionary<string, string> env;
+        string[] vars = new string[] { "RUN_SERVER", "APP_HOST", "SAVE_AND_OPEN_PAGE", "MARA_LOG", "BROWSER", "REMOTE", "HTMLUNIT",
+                                       "DRIVER_NAME", "SELENIUM_JAR", "SELENIUM_PORT", "RUN_SELENIUM" };
+
+        void KillEnvironmentVariables() {
+            env = new Dictionary<string, string>();
+            foreach (var name in vars) {
+                env[name] = Environment.GetEnvironmentVariable(name);
+                Environment.SetEnvironmentVariable(name, null);
+            }
+        }
+
+        void RestoreEnvironmentVariables() {
+            foreach (var name in vars) {
+                Environment.SetEnvironmentVariable(name, env[name]);
+            }
+            env = null;
         }
 
         [Test]

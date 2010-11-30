@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.NUnit", "Mara.NUnit\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Servers.Cassini", "Mara.Servers.Cassini\Mara.Servers.Cassini.csproj", "{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.Drivers.WebClient", "Mara.Drivers.WebClient\Mara.Drivers.WebClient.csproj", "{62C50BBC-AC59-47D8-9CC4-6949DDDD9DFC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mara.UnitTesting", "Mara.UnitTesting\Mara.UnitTesting.csproj", "{656FF6FC-FA1B-4BCF-8183-4909B9C94828}"
 EndProject
 Global
@@ -51,10 +53,19 @@ Global
 		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8353D70-7394-44A0-B4FE-DE2E4B649EBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A1C3E4C-7C95-42D3-8F3F-CBE643442B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A1C3E4C-7C95-42D3-8F3F-CBE643442B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A1C3E4C-7C95-42D3-8F3F-CBE643442B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A1C3E4C-7C95-42D3-8F3F-CBE643442B19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C50BBC-AC59-47D8-9CC4-6949DDDD9DFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C50BBC-AC59-47D8-9CC4-6949DDDD9DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C50BBC-AC59-47D8-9CC4-6949DDDD9DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C50BBC-AC59-47D8-9CC4-6949DDDD9DFC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{656FF6FC-FA1B-4BCF-8183-4909B9C94828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{656FF6FC-FA1B-4BCF-8183-4909B9C94828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656FF6FC-FA1B-4BCF-8183-4909B9C94828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656FF6FC-FA1B-4BCF-8183-4909B9C94828}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

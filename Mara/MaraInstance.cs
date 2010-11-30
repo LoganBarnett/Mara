@@ -25,15 +25,18 @@ namespace Mara {
         // This can be used in the [SetUp] part of your testing framework to setup Mara
         public void Initialize() {
             Mara.Log("Mara.Initialize()");
-            if (RunServer) Mara.Server.Start();
+            if (Mara.RunServer)
+                Mara.Server.Start();
         }
 
         // This can be used in the [TearDown] part of your testing framework to teardown Mara
         public void Shutdown() {
             Mara.Log("Mara.Shutdown()");
-            Mara.Log("  Server.Stop ...");
-            if (RunServer) Mara.Server.Stop(); // <--- oh noes!  Mara.Server is GLOBAL?  icky.  hmm ... Server/Driver need to be in instances ... TODO FIXME
-            Mara.Log("  Close() driver ...");
+            if (Mara.RunServer) {
+                Mara.Log("  Server.Stop ...");
+                Mara.Server.Stop(); // <--- oh noes!  Mara.Server is GLOBAL?  icky.  hmm ... Server/Driver need to be in instances ... TODO FIXME
+                Mara.Log("  Close() driver ...");
+            }
             Close();
         }
 
@@ -63,15 +66,16 @@ namespace Mara {
         public bool           HasXPath(string xpath)                            { return Page.HasXPath(xpath);                       }
         public bool           HasContent(string text)                           { return Page.HasContent(text);                      }
 
-        public void Refresh()                            { Page.Refresh();                     }
-        public void Close()                              { Page.Close();                       }
-        public void ResetSession()                       { Page.ResetSession();                }
-        public void Visit(string path)                   { Page.Visit(path);                   }
-        public void Click(string linkOrButton)           { Page.Click(linkOrButton);           }
-        public void ClickLink(string linkText)           { Page.ClickLink(linkText);           }
-        public void ClickButton(string buttonValue)      { Page.ClickButton(buttonValue);      }
-        public void FillIn(string field, string value)   { Page.FillIn(field, value);          }
-        public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
-        public void ExecuteScript(string script)         { Page.ExecuteScript(script);         }
+        public void Refresh()                                                 { Page.Refresh();                     }
+        public void Close()                                                   { Page.Close();                       }
+        public void ResetSession()                                            { Page.ResetSession();                }
+        public void Visit(string path)                                        { Page.Visit(path);                   }
+        public void Click(string linkOrButton)                                { Page.Click(linkOrButton);           }
+        public void ClickLink(string linkText)                                { Page.ClickLink(linkText);           }
+        public void ClickButton(string buttonValue)                           { Page.ClickButton(buttonValue);      }
+        public void FillIn(string field, string value)                        { Page.FillIn(field, value);          }
+        public void FillInFields(object fieldsAndValues)                      { Page.FillInFields(fieldsAndValues); }
+        public void FillInFields(IDictionary<string, object> fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
+        public void ExecuteScript(string script)                              { Page.ExecuteScript(script);         }
     }
 }
