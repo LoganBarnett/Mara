@@ -25,6 +25,9 @@ namespace Mara.Drivers {
         void FillIn(string field, string value);
         void FillInFields(object fieldsAndValues);
         void FillInFields(IDictionary<string, object> fieldsAndValues);
+		void Check(string checkbox);
+		void Uncheck(string checkbox);
+		void Select(string option, string select);
 
         IElement Find(string xpath);
         IElement Find(string xpath, bool throwExceptionIfNotFound);

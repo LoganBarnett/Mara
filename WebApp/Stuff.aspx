@@ -16,4 +16,5 @@ another
 pre
   </pre>
 </div>
+<p>HostName: <%= Request.Url.Host %></p>
 </asp:Content>

@@ -36,28 +36,28 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Ionic.Zip.Reduced">
-      <HintPath>lib\selenium-r10432\Ionic.Zip.Reduced.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.dll">
-      <HintPath>lib\selenium-r10432\Newtonsoft.Json.dll.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\Newtonsoft.Json.dll.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Common">
-      <HintPath>lib\selenium-r10432\WebDriver.Common.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.Common.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Remote">
-      <HintPath>lib\selenium-r10432\WebDriver.Remote.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.Remote.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Remote.Common">
-      <HintPath>lib\selenium-r10432\WebDriver.Remote.Common.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.Remote.Common.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Firefox">
-      <HintPath>lib\selenium-r10432\WebDriver.Firefox.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.Firefox.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Chrome">
-      <HintPath>lib\selenium-r10432\WebDriver.Chrome.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.Chrome.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.IE">
-      <HintPath>lib\selenium-r10432\WebDriver.IE.dll</HintPath>
+      <HintPath>lib\Selenium-WebDriver\WebDriver.IE.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

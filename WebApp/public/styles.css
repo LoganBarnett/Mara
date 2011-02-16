@@ -81,3 +81,8 @@ form label, form input[type="submit"] {
   display: block;
   margin-top: 10px;
 }
+
+form input[type="checkbox"] + label {
+	display: inline;
+	padding-left: 5px;
+}

@@ -36,17 +36,17 @@ namespace Mara.Drivers {
 
             const string NO_VALUE_ATTRIBUTE_MESSAGE = "Element does not have a value attribute";
 
-            internal static List<IElement> List(ReadOnlyCollection<IWebElement> nativeElements, WebDriver webDriver) {
+            public static List<IElement> List(ReadOnlyCollection<IWebElement> nativeElements, WebDriver webDriver) {
                 var list = new List<IElement>();
                 foreach (var webElement in nativeElements)
                     list.Add(new Element(webElement, webDriver));
                 return list;
             }
 
-            IWebElement NativeElement { get; set; }
-            WebDriver   ParentDriver  { get; set; }
+            public IWebElement NativeElement { get; set; }
+            public WebDriver   ParentDriver  { get; set; }
 
-            internal Element(IWebElement nativeElement, WebDriver webDriver) {
+            public Element(IWebElement nativeElement, WebDriver webDriver) {
                 NativeElement = nativeElement;
                 ParentDriver  = webDriver;
             }

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using NUnit.Framework;
 using Mara;
 
@@ -28,8 +29,39 @@ namespace Mara.DriverSpecs {
             Assert.That(Page.Body, Is.Not.StringContaining("Mara test application"));
         }
 
-        [Test][Ignore]
-        public void CanVisitAbsolutePath() { }
+        [Test]
+        public void CanVisitAbsolutePath() {
+			var port = new Uri(Mara.AppHost).Port;
+			Visit(string.Format("http://localhost:{0}/Stuff.aspx", port));
+			Assert.That(Page.Body, Is.StringContaining("HostName: localhost"));
+			Assert.That(Page.Body, Is.Not.StringContaining("HostName: 127.0.0.1"));
+			Assert.That(CurrentUrl, Is.EqualTo(string.Format("http://localhost:{0}/Stuff.aspx", port)));
+			Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
+
+			Visit(string.Format("http://127.0.0.1:{0}/Stuff.aspx", port));
+			Assert.That(Page.Body, Is.Not.StringContaining("HostName: localhost"));
+			Assert.That(Page.Body, Is.StringContaining("HostName: 127.0.0.1"));
+			Assert.That(CurrentUrl, Is.EqualTo(string.Format("http://127.0.0.1:{0}/Stuff.aspx", port)));
+			Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
+		}
+
+        [Test]
+        public void ChangingMaraAppHostChangesTheHostOfRequests() {
+			var port = new Uri(Mara.AppHost).Port;
+			Mara.AppHost = "http://localhost:" + port.ToString();
+			Visit("/Stuff.aspx");
+			Assert.That(Page.Body, Is.StringContaining("HostName: localhost"));
+			Assert.That(Page.Body, Is.Not.StringContaining("HostName: 127.0.0.1"));
+			Assert.That(CurrentUrl, Is.EqualTo(string.Format("http://localhost:{0}/Stuff.aspx", port)));
+			Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
+
+			Mara.AppHost = "http://127.0.0.1:" + port.ToString();
+			Visit("/Stuff.aspx");
+			Assert.That(Page.Body, Is.Not.StringContaining("HostName: localhost"));
+			Assert.That(Page.Body, Is.StringContaining("HostName: 127.0.0.1"));
+			Assert.That(CurrentUrl, Is.EqualTo(string.Format("http://127.0.0.1:{0}/Stuff.aspx", port)));
+			Assert.That(CurrentPath, Is.EqualTo("/Stuff.aspx"));
+		}
 
         [Test]
         public void CanGetCurrentUrl() {

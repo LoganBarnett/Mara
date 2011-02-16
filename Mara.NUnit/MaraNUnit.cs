@@ -67,6 +67,9 @@ namespace Mara {
         public void FillIn(string field, string value)                        { Page.FillIn(field, value);          }
         public void FillInFields(object fieldsAndValues)                      { Page.FillInFields(fieldsAndValues); }
         public void FillInFields(IDictionary<string, object> fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
+        public void Check(string checkbox)                                    { Page.Check(checkbox);               }
+        public void Uncheck(string checkbox)                                  { Page.Uncheck(checkbox);             }
+        public void Select(string dropdown, string option)                    { Page.Select(dropdown, option);      }
         public void ExecuteScript(string script)                              { Page.ExecuteScript(script);         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 
@@ -239,18 +240,21 @@ namespace Mara.Drivers {
 
         // TODO I don't like using Mara.AppHost ... ?  using something static feels icky?  maybe?
         public void Visit(string path) {
-            Mara.Log("Visit({0})", path);
-            // The ChromeDriver hates life ...
+			var url = (path.StartsWith("/")) ? (Mara.AppHost + path) : path;
+
+            Mara.Log("Visit({0})", url);
+
+            // The ChromeDriver hates life sometimes ...
             if (Browser == "chrome")
                 for (var i = 0; i < 10; i ++)
-                    if (TryToVisitInChrome(path))
+                    if (TryToVisitInChrome(url))
                         break;
                     else {
-                        Mara.Log("Chrome didn't want to visit {0} ... trying again ... ", path);
+                        Mara.Log("Chrome didn't want to visit {0} ... trying again ... ", url);
                         System.Threading.Thread.Sleep(100);
                     }   
             else
-                webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+                webdriver.Navigate().GoToUrl(url);
         }
 
         public void FillIn(string field, string value) {
@@ -277,6 +281,60 @@ namespace Mara.Drivers {
                 FillIn(field.Key, field.Value.ToString());
         }
 
+		public void Check(string checkbox) {
+			(CheckBox(checkbox) as WebDriver.Element).NativeElement.Select();
+		}
+
+		public void Uncheck(string checkbox) {
+			var element = CheckBox(checkbox) as WebDriver.Element;
+			if (element.NativeElement.Selected)
+				element.NativeElement.Toggle();
+		}
+
+		IElement CheckBox(string checkbox) {
+            var id_XPath   = "//input[@type='checkbox'][@id='" + checkbox + "']";
+            var name_XPath = "//input[@type='checkbox'][@name='" + checkbox + "']";
+
+            // try ID first, then name ...
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+
+			return element;
+		}
+
+		public void Select(string dropdown, string option) {
+			// Find the <select>
+            var id_XPath   = "//select[@id='" + dropdown + "']";
+            var name_XPath = "//select[@name='" + dropdown + "']";
+            var element = Find(id_XPath);
+            if (element == null)
+                element = Find(name_XPath);
+            if (element == null)
+                throw new ElementNotFoundException(id_XPath + " OR " + name_XPath);
+
+			// Find the <option>
+			//
+			// Mara needs to add IElement.Find() and IElement.All() to search for subqueries ... right now, we need to get the native WebDriver element
+			//
+			Element nativeElement = element as WebDriver.Element;
+			var options           = WebDriver.Element.List(nativeElement.NativeElement.FindElements(By.TagName("option")), this);
+
+			// find an option with the matching text OR value for this select
+			var matchingOption = options.FirstOrDefault(o => {
+				var text  = (o.Text  == null) ? "" : o.Text.Trim();		
+				var value = (o.Value == null) ? "" : o.Value.Trim();		
+				return (text == option.Trim() || value == option.Trim());
+			});
+
+			if (matchingOption != null)
+				(matchingOption as WebDriver.Element).NativeElement.Select();
+			else
+                throw new ElementNotFoundException("<option> with Text or Value: " + option);
+		}
+
         public string Body {
             get { return webdriver.PageSource; }
         }
@@ -286,7 +344,7 @@ namespace Mara.Drivers {
         }
 
         public string CurrentPath {
-            get { return webdriver.Url.Replace(Mara.AppHost, ""); } // FIXME Don't use a Global Mara.Server
+            get { return new Uri(CurrentUrl).LocalPath; } 
         }
 
         public bool JavaScriptSupported { get { return true; }}
@@ -384,8 +442,8 @@ namespace Mara.Drivers {
             }
         }
 
-        bool TryToVisitInChrome(string path) {
-            webdriver.Navigate().GoToUrl(Mara.AppHost + path);
+        bool TryToVisitInChrome(string url) {
+            webdriver.Navigate().GoToUrl(url);
             try {
                 webdriver.GetWindowHandle();
                 return true;

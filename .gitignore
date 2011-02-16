@@ -4,5 +4,4 @@
 bin
 obj
 TestResult.xml
-*.ReSharper.user
-_ReSharper.*
+*ReSharper*

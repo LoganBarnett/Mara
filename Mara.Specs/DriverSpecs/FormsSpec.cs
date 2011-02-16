@@ -44,6 +44,7 @@ namespace Mara.DriverSpecs {
 
             Assert.Null(Find("//dd[@data-variable='DogName']"));
             ClickButton("POST some stuff");
+			Assert.That(Find("//span[@class='requestMethod']").Text, Is.EqualTo("POST"));
 
             // When you submit the form a <DL> is printed with info about all of the POSTed variables
             Assert.NotNull(Find("//dd[@data-variable='DogName']"));
@@ -61,6 +62,71 @@ namespace Mara.DriverSpecs {
         }
 
         [Test]
+        public void CanCheckCheckbox_BlowsUpIfNotFound() {
+            var exceptionMessage = "Could not find element with XPath: //input[@type='checkbox'][@id='IDontExist'] OR //input[@type='checkbox'][@name='IDontExist']";
+            this.AssertThrows<ElementNotFoundException>(exceptionMessage, () => {
+				Check("IDontExist");
+            });
+
+			ClickButton("POST some stuff");
+			Assert.Null(Find("//dd[@data-variable='DogIsGood']"));
+
+			Check("DogIsGood");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='DogIsGood']").Text, Is.EqualTo("on"));
+
+			Uncheck("DogIsGood");
+			ClickButton("POST some stuff");
+			Assert.Null(Find("//dd[@data-variable='DogIsGood']"));
+		}
+
+        [Test]
+        public void CanSelectFromDropDown_BlowsUpIfDropDownOrOptionNotFound() {
+			// TODO test boom!
+
+			// the first one, by default
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("FuzzyValue"));
+
+			Select("HairType", "Poofy");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("Poofy"));
+
+			// Can select option text
+			Select("HairType", "Long");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("LongHairValue"));
+
+			Select("HairType", "Poodle-y");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("Poodle-y"));
+
+			// Can select option value
+			Select("HairType", "LongHairValue");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='HairType']").Text, Is.EqualTo("LongHairValue"));
+
+			// TODO Can Deselect() [defaults back to the first field)
+
+            // TODO make sure that Select() deselects all other options in this <select>!!!!
+		}
+
+        [Test]
+        public void CanFillInTextArea_BlowsUpIfNotFound() {
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='DogBio']").Text, Is.EqualTo(""));
+
+			FillIn("DogBio", "Hello World!");
+			ClickButton("POST some stuff");
+			Assert.That(Find("//dd[@data-variable='DogBio']").Text, Is.EqualTo("Hello World!"));
+
+			FillIn("DogBio", "Hello World!\n\nI have new lines");
+			ClickButton("POST some stuff");
+			// Assert.That(Find("//dd[@data-variable='DogBio']").Text, Is.EqualTo("Hello World!\n\nI have new lines"));
+			Assert.That(Find("//dd[@data-variable='DogBio']").Text, Is.EqualTo("Hello World! I have new lines")); // can't seem to get this to not be cleaned up ... (new lines removed) ... TODO FIXME
+		}
+
+        [Test]
         public void CanFillInMultipleFields_BlowsUpIfAnyAreNotDefined() {
             var exceptionMessage = "Could not find element with XPath: id('IDontExist') OR //*[@name='IDontExist']";
             this.AssertThrows<ElementNotFoundException>(exceptionMessage, () => {
@@ -75,6 +141,9 @@ namespace Mara.DriverSpecs {
             Assert.That(Find("//dd[@data-variable='DogName']").Text,  Is.EqualTo("Rover"));
             Assert.That(Find("//dd[@data-variable='DogBreed']").Text, Is.EqualTo("Golden Retriever"));
         }
+
+		[Test][Ignore]
+		public void CanFillInMultipleFieldsUsingAPrefixForEachField() {}
 
         [Test]
         public void ClickClicksLinkOrButton_BlowsUpIfNotFound() {
@@ -94,5 +163,17 @@ namespace Mara.DriverSpecs {
             Click("POST some stuff");
             Assert.True(Page.HasContent("Snoopy"));
         }
+
+		[Test]
+		public void CanSubmitAFormWithMethodGET() {
+			FillIn("q", "My Search");
+			ClickButton("Search");
+
+			Assert.That(Find("//span[@class='requestMethod']").Text, Is.EqualTo("GET"));
+
+            Assert.That(Find("//dd[@data-variable='q']").Text,  Is.EqualTo("My Search"));
+
+			Assert.That(Find("id('querystrings')").Text, Is.StringContaining("q = My Search"));
+		}
     }
 }
