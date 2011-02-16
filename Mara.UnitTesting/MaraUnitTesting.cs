@@ -48,5 +48,11 @@ namespace Mara {
         public void FillIn(string field, string value) { Page.FillIn(field, value); }
         public void FillInFields(object fieldsAndValues) { Page.FillInFields(fieldsAndValues); }
         public void ExecuteScript(string script) { Page.ExecuteScript(script); }
+
+
+        public void FillInFields(IDictionary<string, object> fieldsAndValues)
+        {
+            Page.FillInFields(fieldsAndValues);
+        }
     }
 }
